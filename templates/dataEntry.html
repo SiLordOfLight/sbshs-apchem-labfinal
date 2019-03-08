@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="page_header">{{data_type}}</h1>
+
+    <form class="data_form needs-validation" action="/addData-{{page_n+1}}" method="post" novalidate>
+        <input type="hidden" name="last_page" value="{{page_n}}">
+
+        {% for inp in requiredData %}
+        <!-- {{inp['name']}} -->
+        {% include "custom_input.html" %}
+        {% endfor %}
+        {% if choices %}
+        <div class="btn-group" role="group">
+            <button type="submit" formaction="/addData-{{choices[0]['link']}}" class="btn btn-warning">{{choices[0]['name']}}</button>
+            <button type="submit" formaction="/addData-{{choices[1]['link']}}" class="btn btn-primary">{{choices[1]['name']}}</button>
+        </div>
+        {% else %}
+        <button type="submit" class="btn btn-{% if last_form %}success{%else%}primary{% endif %}">
+            {% if last_form %}Submit{%else%}Next{% endif %}
+        </button>
+        {% endif %}
+    </form>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              }, false);
+            });
+          }, false);
+        })();
+    </script>
+{% endblock %}

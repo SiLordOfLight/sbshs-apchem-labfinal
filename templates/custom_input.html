@@ -1,0 +1,45 @@
+{% if not "type" in inp or inp["type"] == "text" %}
+<div class="form-group">
+    <label for="{{inp['key']}}">{{inp['name']}}</label>
+    <div class="input-group" id="{{inp['key']}}">
+        {% if "pretext" in inp %}
+        <div class="input-group-prepend">
+            <span class="input-group-text">{{inp["pretext"]}}</span>
+        </div>
+        {% endif %}
+        <input class="form-control"
+            {% if 'typef' in inp %}
+                type={{inp['typef']}}
+            {%else%}
+                type="text"
+            {% endif %}
+            {% if 'rules' in inp %}
+                {{inp['rules']}}
+            {%endif%}
+            name="{{inp['key']}}"
+            value="{{inp['autoVal']}}"
+            required>
+
+        {% if "posttext" in inp %}
+        <div class="input-group-append">
+            <span class="input-group-text">{{inp["posttext"]}}</span>
+        </div>
+        {% endif %}
+
+        {% if 'fail' in inp %}
+        <div class="invalid-feedback">
+            {{inp['fail']}}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% elif inp["type"] == "dropdown" %}
+<div class="form-group">
+    <label for="{{inp['key']}}">{{inp['name']}}</label>
+    <select class="custom-select" id="{{inp['key']}}" required>
+        {% for opt in inp['choices'] %}
+        <option value="{{opt}}">{{opt}}</option>
+        {% endfor %}
+    </select>
+</div>
+{% endif %}

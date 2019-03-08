@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="page_header">Water Analysis Data Collection</h1>
+
+    <p id="info_blurb">This site is intended for the collection of data on the field analysis of water samples <br/>
+    Please make sure you remember your Entry ID!</p>
+
+    <form action="/dataEntry-1" method="post">
+        <button type="submit" class="btn btn-success" id="go_btn">Enter Data!</button>
+    </form>
+
+    {% if 'reset' in request.args %}
+        <script type="text/javascript">
+            alert("Data successfully sent!")
+        </script>
+    {% endif %}
+{% endblock %}
