@@ -87,15 +87,25 @@ def submitData():
     return redirect(url_for("home")+"?reset=true")
 
 def sendData(inp):
-    tval = json.dumps(inp) #"value 1, value 2, value 3"
+    headerLine = ""
+    headerLine += "entryID, submitter, timestamp"
+    if "field_data" in inp:
+        headerLine += ", location, temperature, pH, turbulence"
+    else:
+        headerLine += ", [DO]"
 
-    #key 1, key 2, key 3
-    #value 1a, value 2a, value 3a
+    valueLine = "%s, %s, %s" % (inp['basic_data']['entry_id'], inp['basic_data']['submitter_name'], inp['basic_data']['timestamp'])
+    if "field_data" in inp:
+        valueLine += ", %s, %s, %s, %s" (inp['field_data']['loc'], inp['field_data']['temp'], inp['field_data']['ph'], inp['field_data']['turbulence'])
+    else:
+        valueLine += ", %s" % inp['lab_data']['do']
+
+    fileBody = "%s\n%s" % (headerLine, valueLine)
 
     msg = Message('Water Sample (%s)' % dt.datetime.now().strftime("%m/%d %H:%M:%S"), sender = 'jatrimble777@gmail.com', recipients = ['jatrimble777@gmail.com'])
 
     msg.body = "#######"
-    msg.attach("SampleData-%s.json" % dt.datetime.now().strftime("%m/%d %H:%M:%S"), "application/json", tval)
+    msg.attach("SampleData-%s.csv" % dt.datetime.now().strftime("%m/%d %H:%M:%S"), "text/csv", fileBody)
 
     mail.send(msg)
 
