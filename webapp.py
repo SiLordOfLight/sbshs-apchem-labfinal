@@ -12,6 +12,8 @@ app = Flask(__name__)
 
 app.debug = True #Change this to False for production
 
+# val = "First line\nNext line"
+
 app.secret_key = os.environ['SECRET_KEY'] #used to sign session cookies
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -114,4 +116,4 @@ def dated_url_for(endpoint, **values):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="192.168.1.30", port=2050)
+    app.run(debug=True, host="localhost", port=2050)
