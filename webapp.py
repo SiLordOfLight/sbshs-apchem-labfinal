@@ -88,17 +88,17 @@ def submitData():
 
 def sendData(inp):
     headerLine = ""
-    headerLine += "entryID, submitter, timestamp"
+    headerLine += "entryID,submitter,timestamp"
     if "field_data" in inp:
-        headerLine += ", location, temperature, pH, turbulence"
+        headerLine += ",location,temperature,pH,turbulence"
     else:
-        headerLine += ", [DO]"
+        headerLine += ",[DO]"
 
-    valueLine = "\"%s\", \"%s\", \"%s\"" % (inp['basic_data']['entry_id'], inp['basic_data']['submitter_name'], inp['basic_data']['timestamp'])
+    valueLine = "\"%s\",\"%s\",\"%s\"" % (inp['basic_data']['entry_id'], inp['basic_data']['submitter_name'], inp['basic_data']['timestamp'])
     if "field_data" in inp:
-        valueLine += ", \"%s\", %s, %s, \"%s\"" % (inp['field_data']['loc'], inp['field_data']['temp'], inp['field_data']['ph'], inp['field_data']['turbulence'])
+        valueLine += ",\"%s\",%s,%s,\"%s\"" % (inp['field_data']['loc'], inp['field_data']['temp'], inp['field_data']['ph'], inp['field_data']['turbulence'])
     else:
-        valueLine += ", %s" % inp['lab_data']['do']
+        valueLine += ",%s" % inp['lab_data']['do']
 
     fileBody = "%s\n%s" % (headerLine, valueLine)
 
